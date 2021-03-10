@@ -2,22 +2,14 @@
 
 ## Part A
 
-![Part A](static/part-a.gif)
+![Part A](https://raw.githubusercontent.com/YashTotale/weather-data-api/main/static/part-a.gif)
 
 ## Part B
 
-![Part B](static/part-b.gif)
+![Part B](https://raw.githubusercontent.com/YashTotale/weather-data-api/main/static/part-b.gif)
 
 ## Part C
 
-### Prompt
-
-![Part C Prompt](static/part-c-prompt.png)
-
-### Error
-
-![Part C Error](static/part-c-error.png)
-
-### Results
-
-![Part C Results](static/part-c-results.png)
+| Prompt                                                                                                        | Error                                                                                                       | Results                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| ![Part C Prompt](https://raw.githubusercontent.com/YashTotale/weather-data-api/main/static/part-c-prompt.png) | ![Part C Error](https://raw.githubusercontent.com/YashTotale/weather-data-api/main/static/part-c-error.png) | ![Part C Results](https://raw.githubusercontent.com/YashTotale/weather-data-api/main/static/part-c-results.png) |
