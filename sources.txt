@@ -1,5 +1,5 @@
-./src/WeatherStation.java
+./src/Helpers.WeatherStation.java
 ./src/Main.java
-./src/WeatherAPI1.java
-./src/WeatherAPI2.java
-./src/WeatherAPI3.java
+./src/API.WeatherAPI1.java
+./src/API.WeatherAPI2.java
+./src/API.WeatherAPI3.java

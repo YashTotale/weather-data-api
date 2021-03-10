@@ -1,3 +1,7 @@
+package API;
+
+import Helpers.WeatherStation;
+
 import javax.swing.*;
 import java.util.ArrayList;
 

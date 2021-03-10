@@ -1,4 +1,5 @@
-import Helpers.WeatherField;
+package Helpers;
+
 import core.data.DataSource;
 
 import javax.imageio.ImageIO;
@@ -17,9 +18,10 @@ public class WeatherStation {
   public static final String RESET = "\u001b[0m";
   // Change below if using repl.it
   public static final String IMAGES_DIR = System.getProperty("user.dir") + "/images";
+  private static final String LOCATION = "Location";
 
   public static final WeatherField[] fields = {
-    new WeatherField("Location", "location"),
+    new WeatherField(LOCATION, "location"),
     new WeatherField("Latitude", "latitude"),
     new WeatherField("Longitude", "longitude"),
     new WeatherField("Observation Time", "observation_time"),
@@ -53,13 +55,12 @@ public class WeatherStation {
     getImage();
   }
 
-  // and getters for each
   public String getId() {
-    return null;
+    return this.id;
   }
 
-  public String getName() {
-    return null;
+  public String getLocation() {
+    return data.get(LOCATION);
   }
 
   /* Determine if this weather station is located in the given state */
@@ -114,5 +115,4 @@ public class WeatherStation {
       }
     }
   }
-
 }
