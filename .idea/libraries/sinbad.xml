@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="sinbad">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jars/sinbad.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

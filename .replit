@@ -1,0 +1,1 @@
+run="clear  &&  find ./src -name '*.java' > sources.txt && javac -cp ./jars/sinbad.jar -d bin @sources.txt && cd bin && java -cp ../jars/sinbad.jar:. Main"
