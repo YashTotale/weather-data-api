@@ -7,6 +7,7 @@
   - [Part A](#part-a)
   - [Part B](#part-b)
   - [Part C](#part-c)
+- [Day 2](#day-2)
 
 ## Running Locally
 
@@ -36,3 +37,7 @@ I chose Atlanta, Miami, and Dallas as my 3 other locations as they are all in th
 | Prompt                                                                                                        | Error                                                                                                       | Results                                                                                                         |
 | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | ![Part C Prompt](https://raw.githubusercontent.com/YashTotale/weather-data-api/main/static/API1/part-c-prompt.png) | ![Part C Error](https://raw.githubusercontent.com/YashTotale/weather-data-api/main/static/API1/part-c-error.png) | ![Part C Results](https://raw.githubusercontent.com/YashTotale/weather-data-api/main/static/API1/part-c-results.png) |
+
+## Day 2
+
+![Day 2](https://raw.githubusercontent.com/YashTotale/weather-data-api/main/static/api2.gif)
