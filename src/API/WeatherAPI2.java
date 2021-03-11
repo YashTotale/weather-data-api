@@ -1,5 +1,6 @@
 package API;
 
+import Helpers.ConsoleColors;
 import core.data.DataSource;
 
 import java.util.ArrayList;
@@ -75,6 +76,6 @@ class Observation {
 
   /* produce a string describing this observation */
   public String toString() {
-    return (location + ": " + temp + " degrees, " + description + " (wind: " + windDir + " degrees)");
+    return (ConsoleColors.bold(location) + ": " + temp + " degrees, " + description + " (wind: " + windDir + " degrees)");
   }
 }

@@ -14,8 +14,6 @@ public class WeatherStation {
   private DataSource ds;
   private final HashMap<String, String> data = new HashMap<>();
 
-  public static final String BOLD = "\u001b[1m";
-  public static final String RESET = "\u001b[0m";
   // Change below if using repl.it
   public static final String IMAGES_DIR = System.getProperty("user.dir") + "/images";
   private static final String LOCATION = "Location";
@@ -87,7 +85,7 @@ public class WeatherStation {
     for (WeatherField field : fields) {
       String name = field.getName();
       if (data.containsKey(name)) {
-        System.out.println(name + ": " + BOLD + data.get(name) + RESET);
+        System.out.println(name + ": " + ConsoleColors.bold(data.get(name)));
       }
     }
   }
