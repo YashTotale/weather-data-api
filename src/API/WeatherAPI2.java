@@ -23,7 +23,7 @@ public class WeatherAPI2 {
 
     System.out.println("Highest Pressure: " + highest);
     System.out.println("Lowest Pressure: " + lowest);
-    System.out.println("Range of Pressure: " + (highest.pressure - lowest.pressure) + " mb");
+    System.out.println("Range of Pressure: " + (highest.getPressure() - lowest.getPressure()) + " mb");
   }
 
   public WeatherAPI2(String... ids) {
@@ -65,11 +65,20 @@ public class WeatherAPI2 {
 }
 
 class Observation {
-  String location;
-  String description;
-  float temp;
-  int windDir;
-  float pressure;
+  private final String location;
+  private final String description;
+  private final float temp;
+  private final int windDir;
+  private final float pressure;
+
+  // If you did not want to include pressure
+  Observation(String location, String description, float temp, int windDir) {
+    this.location = location;
+    this.description = description;
+    this.temp = temp;
+    this.windDir = windDir;
+    this.pressure = 0.0F; // Not sure what to set it to
+  }
 
   Observation(String location, String description, float temp, int windDir, float pressure) {
     this.location = location;
@@ -83,7 +92,6 @@ class Observation {
     return this.temp < that.temp;
   }
 
-
   public boolean lowerPressureThan(Observation that) {
     return this.pressure < that.pressure;
   }
@@ -94,5 +102,25 @@ class Observation {
 
   public String toString() {
     return (ConsoleColors.bold(location) + ": " + temp + " degrees, " + description + " (pressure: " + pressure + " mb, wind: " + windDir + " degrees)");
+  }
+
+  public String getLocation() {
+    return this.location;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public float getTemp() {
+    return temp;
+  }
+
+  public int getWindDir() {
+    return windDir;
+  }
+
+  public float getPressure() {
+    return pressure;
   }
 }
