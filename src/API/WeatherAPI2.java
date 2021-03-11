@@ -9,12 +9,21 @@ public class WeatherAPI2 {
   ArrayList<Observation> obs = new ArrayList<>();
 
   public static void main(String[] args) {
-    WeatherAPI2 wapi = new WeatherAPI2("KATL", "KSAV", "KCLE");
+    WeatherAPI2 wapi = new WeatherAPI2("KATL", "KBHM", "KSFO", "KSAV", "TJSJ", "KDSM", "KCLE");
 
     System.out.println();
 
     System.out.println("Coldest: " + wapi.coldestObservation());
-    //wapi.highestPressure();
+
+    System.out.println();
+
+    Observation[] highAndLow = wapi.highestAndLowestPressures();
+    Observation highest = highAndLow[0];
+    Observation lowest = highAndLow[1];
+
+    System.out.println("Highest Pressure: " + highest);
+    System.out.println("Lowest Pressure: " + lowest);
+    System.out.println("Range of Pressure: " + (highest.pressure - lowest.pressure) + " mb");
   }
 
   public WeatherAPI2(String... ids) {
@@ -22,7 +31,7 @@ public class WeatherAPI2 {
       DataSource ds = DataSource.connect("http://weather.gov/xml/current_obs/" + id + ".xml");
       ds.setCacheTimeout(15 * 60);
       ds.load();
-      Observation ob = ds.fetch("API.Observation", "location", "weather", "temp_f", "wind_degrees");
+      Observation ob = ds.fetch("API.Observation", "location", "weather", "temp_f", "wind_degrees", "pressure_mb");
       System.out.println(id + ": " + ob);
       obs.add(ob);
     }
@@ -38,15 +47,16 @@ public class WeatherAPI2 {
     return coldest;
   }
 
-  public void highestPressure() {
-    ArrayList<Observation> observations = new ArrayList<>();
-    // fill observations with at least 5 API.Observation objects
+  public Observation[] highestAndLowestPressures() {
+    Observation highest = null;
+    Observation lowest = null;
 
-    // find the API.Observation with the highest barometric pressure.
+    for (Observation ob : obs) {
+      if (highest == null || ob.higherPressureThan(highest)) highest = ob;
+      if (lowest == null || ob.lowerPressureThan(lowest)) lowest = ob;
+    }
 
-    // find the range from the highest to lowest pressures
-
-
+    return new Observation[]{highest, lowest};
   }
 
   public String toString() {
@@ -54,28 +64,35 @@ public class WeatherAPI2 {
   }
 }
 
-
-/* Represents a weather observation at a point in time*/
 class Observation {
   String location;
   String description;
-  float temp;    // in fahrenheit
-  int windDir;   // in degrees
+  float temp;
+  int windDir;
+  float pressure;
 
-  Observation(String location, String description, float temp, int windDir) {
+  Observation(String location, String description, float temp, int windDir, float pressure) {
     this.location = location;
     this.description = description;
     this.temp = temp;
     this.windDir = windDir;
+    this.pressure = pressure;
   }
 
-  /* determine if the temperature of this observation is colder than 'that's */
   public boolean colderThan(Observation that) {
     return this.temp < that.temp;
   }
 
-  /* produce a string describing this observation */
+
+  public boolean lowerPressureThan(Observation that) {
+    return this.pressure < that.pressure;
+  }
+
+  public boolean higherPressureThan(Observation that) {
+    return this.pressure > that.pressure;
+  }
+
   public String toString() {
-    return (ConsoleColors.bold(location) + ": " + temp + " degrees, " + description + " (wind: " + windDir + " degrees)");
+    return (ConsoleColors.bold(location) + ": " + temp + " degrees, " + description + " (pressure: " + pressure + " mb, wind: " + windDir + " degrees)");
   }
 }
