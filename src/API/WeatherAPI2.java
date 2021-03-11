@@ -13,7 +13,7 @@ public class WeatherAPI2 {
 
     System.out.println();
 
-    System.out.println("Coldest: " + wapi.coldestObservation());
+    System.out.println(ConsoleColors.underline("Coldest") + ": " + wapi.coldestObservation());
 
     System.out.println();
 
@@ -21,9 +21,9 @@ public class WeatherAPI2 {
     Observation highest = highAndLow[0];
     Observation lowest = highAndLow[1];
 
-    System.out.println("Highest Pressure: " + highest);
-    System.out.println("Lowest Pressure: " + lowest);
-    System.out.println("Range of Pressure: " + (highest.getPressure() - lowest.getPressure()) + " mb");
+    System.out.println(ConsoleColors.underline("Highest Pressure") + ": " + highest);
+    System.out.println(ConsoleColors.underline("Lowest Pressure") + ": "  + lowest);
+    System.out.println(ConsoleColors.underline("Range of Pressure") + ": "  + (highest.getPressure() - lowest.getPressure()) + " mb");
   }
 
   public WeatherAPI2(String... ids) {
@@ -32,7 +32,7 @@ public class WeatherAPI2 {
       ds.setCacheTimeout(15 * 60);
       ds.load();
       Observation ob = ds.fetch("API.Observation", "location", "weather", "temp_f", "wind_degrees", "pressure_mb");
-      System.out.println(id + ": " + ob);
+      System.out.println(ConsoleColors.underline(id) + ": " + ob);
       obs.add(ob);
     }
   }
