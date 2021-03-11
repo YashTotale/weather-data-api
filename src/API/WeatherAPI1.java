@@ -3,7 +3,6 @@ package API;
 import Helpers.WeatherStation;
 
 import javax.swing.*;
-import java.util.ArrayList;
 
 public class WeatherAPI1 {
     public static void main(String[] args) {
@@ -35,8 +34,7 @@ public class WeatherAPI1 {
                 String location = JOptionPane.showInputDialog(null, "Enter a location");
                 if (location == null || location.length() == 0) break;
                 WeatherStation userInput = new WeatherStation(location);
-                ArrayList<String> info = userInput.getInfoStrings();
-                JOptionPane.showMessageDialog(null, info.toString(), "Information for " + location, JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, userInput, "Information for " + location, JOptionPane.INFORMATION_MESSAGE);
                 break;
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Enter a valid ID", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -44,4 +42,3 @@ public class WeatherAPI1 {
         }
     }
 }
-

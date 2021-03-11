@@ -4,44 +4,40 @@ import core.data.DataSource;
 
 import java.util.ArrayList;
 
-/******   NOTE  When you want to run this file,
- You must change Main.java*/
-
 public class WeatherAPI2 {
+  ArrayList<Observation> obs = new ArrayList<>();
+
   public static void main(String[] args) {
-    WeatherAPI2 wapi = new WeatherAPI2();
-    wapi.coldestObservation();
+    WeatherAPI2 wapi = new WeatherAPI2("KATL", "KSAV", "KCLE");
+
+    System.out.println();
+
+    System.out.println("Coldest: " + wapi.coldestObservation());
     //wapi.highestPressure();
   }
 
-  public void coldestObservation() {
-    String id1 = "KATL";
-    DataSource ds1 = DataSource.connect("http://weather.gov/xml/current_obs/" + id1 + ".xml");
-    ds1.setCacheTimeout(15 * 60);
-    ds1.load();
-
-
-    Observation ob1 = ds1.fetch("API.Observation", "weather", "temp_f", "wind_degrees");
-    System.out.println(id1 + ": " + ob1);
-
-    String id2 = "KSAV";
-    DataSource ds2 = DataSource.connect("http://weather.gov/xml/current_obs/" + id2 + ".xml");
-    ds2.setCacheTimeout(15 * 60);
-    ds2.load();
-
-    Observation ob2 = ds2.fetch("API.Observation", "weather", "temp_f", "wind_degrees");
-    System.out.println(id2 + ": " + ob2);
-    // make a third API.Observation and find the coldest of the three
-
-
-    if (ob1.colderThan(ob2)) {
-      System.out.println("Colder at " + id1);
-    } else {
-      System.out.println("Colder at " + id2);
+  public WeatherAPI2(String... ids) {
+    for (String id : ids) {
+      DataSource ds = DataSource.connect("http://weather.gov/xml/current_obs/" + id + ".xml");
+      ds.setCacheTimeout(15 * 60);
+      ds.load();
+      Observation ob = ds.fetch("API.Observation", "location", "weather", "temp_f", "wind_degrees");
+      System.out.println(id + ": " + ob);
+      obs.add(ob);
     }
   }
 
-  public void highestPressure(){
+  public Observation coldestObservation() {
+    Observation coldest = null;
+
+    for (Observation ob : obs) {
+      if (coldest == null || ob.colderThan(coldest)) coldest = ob;
+    }
+
+    return coldest;
+  }
+
+  public void highestPressure() {
     ArrayList<Observation> observations = new ArrayList<>();
     // fill observations with at least 5 API.Observation objects
 
@@ -51,28 +47,34 @@ public class WeatherAPI2 {
 
 
   }
+
+  public String toString() {
+    return obs.toString();
+  }
 }
 
 
 /* Represents a weather observation at a point in time*/
 class Observation {
-   float temp;    // in fahrenheit
-   int windDir;   // in degrees
-   String description;
+  String location;
+  String description;
+  float temp;    // in fahrenheit
+  int windDir;   // in degrees
 
-  Observation(String description, float temp, int windDir) {
-      this.description = description;
-      this.temp = temp;
-      this.windDir = windDir;
-   }
+  Observation(String location, String description, float temp, int windDir) {
+    this.location = location;
+    this.description = description;
+    this.temp = temp;
+    this.windDir = windDir;
+  }
 
   /* determine if the temperature of this observation is colder than 'that's */
-   public boolean colderThan(Observation that) {
-      return this.temp < that.temp;
-   }
+  public boolean colderThan(Observation that) {
+    return this.temp < that.temp;
+  }
 
   /* produce a string describing this observation */
-   public String toString() {
-      return (temp + " degrees; " + description + " (wind: " + windDir + " degrees)");
-   }
+  public String toString() {
+    return (location + ": " + temp + " degrees, " + description + " (wind: " + windDir + " degrees)");
+  }
 }

@@ -70,16 +70,7 @@ public class WeatherStation {
 
   // add in a toString, too!
 
-  public void showInfo() {
-    for (WeatherField field : fields) {
-      String name = field.getName();
-      if (data.containsKey(name)) {
-        System.out.println(name + ": " + BOLD + data.get(name) + RESET);
-      }
-    }
-  }
-
-  public ArrayList<String> getInfoStrings() {
+  public String toString() {
     ArrayList<String> info = new ArrayList<>();
 
     for (WeatherField field : fields) {
@@ -89,7 +80,16 @@ public class WeatherStation {
       }
     }
 
-    return info;
+    return info.toString();
+  }
+
+  public void showInfo() {
+    for (WeatherField field : fields) {
+      String name = field.getName();
+      if (data.containsKey(name)) {
+        System.out.println(name + ": " + BOLD + data.get(name) + RESET);
+      }
+    }
   }
 
   private void getImage() {
