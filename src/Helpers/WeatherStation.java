@@ -68,20 +68,12 @@ public class WeatherStation {
     getImage();
   }
 
-  public String getId() {
-    return this.id;
-  }
-
-  public String getLocation() {
-    return data.get(LOCATION);
-  }
-
   public String getState() {
     return data.get(STATE);
   }
 
-  public boolean isLocatedInState(String st) {
-   return getState().equals(st);
+  public double getLatitude() {
+    return Double.parseDouble(data.get(LATITUDE));
   }
 
   public ArrayList<String> getDataStrings() {
@@ -93,7 +85,7 @@ public class WeatherStation {
 
     for (Map.Entry<String, String> entry : data.entrySet()) {
       String key = entry.getKey();
-      Object value = entry.getValue();
+      String value = entry.getValue();
       dataStrs.add(key + ": " + (bold ? ConsoleColors.bold(value) : value));
     }
 
