@@ -8,6 +8,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class WeatherStation {
   private String id;
@@ -16,12 +17,17 @@ public class WeatherStation {
 
   // Change below if using repl.it
   public static final String IMAGES_DIR = System.getProperty("user.dir") + "/images";
+
   private static final String LOCATION = "Location";
+  private static final String LATITUDE = "Latitude";
+  private static final String LONGITUDE = "Longitude";
+  private static final String NAME = "Name";
+  private static final String STATE = "State";
 
   public static final WeatherField[] fields = {
     new WeatherField(LOCATION, "location"),
-    new WeatherField("Latitude", "latitude"),
-    new WeatherField("Longitude", "longitude"),
+    new WeatherField(LATITUDE, "latitude"),
+    new WeatherField(LONGITUDE, "longitude"),
     new WeatherField("Observation Time", "observation_time"),
     new WeatherField("Visibility", "visibility_mi"),
     new WeatherField("Temperature", "temperature_string"),
@@ -29,6 +35,15 @@ public class WeatherStation {
     new WeatherField("Wind chill", "windchill_string"),
     new WeatherField("Pressure", "pressure_string"),
   };
+
+  public WeatherStation(String id, String name, String state, String latitude, String longitude) {
+    this.id = id;
+
+    data.put(NAME, name);
+    data.put(STATE, state);
+    data.put(LATITUDE, latitude);
+    data.put(LONGITUDE, longitude);
+  }
 
   public WeatherStation(String id) {
     this(id, false);
@@ -61,55 +76,64 @@ public class WeatherStation {
     return data.get(LOCATION);
   }
 
-  /* Determine if this weather station is located in the given state */
-  public boolean isLocatedInState(String st) {
-    return false;
+  public String getState() {
+    return data.get(STATE);
   }
 
-  // add in a toString, too!
+  public boolean isLocatedInState(String st) {
+   return getState().equals(st);
+  }
 
-  public String toString() {
-    ArrayList<String> info = new ArrayList<>();
+  public ArrayList<String> getDataStrings() {
+    return getDataStrings(false);
+  }
 
-    for (WeatherField field : fields) {
-      String name = field.getName();
-      if (data.containsKey(name)) {
-        info.add(name + ": " + data.get(name));
-      }
+  public ArrayList<String> getDataStrings(boolean bold) {
+    ArrayList<String> dataStrs = new ArrayList<>();
+
+    for (Map.Entry<String, String> entry : data.entrySet()) {
+      String key = entry.getKey();
+      Object value = entry.getValue();
+      dataStrs.add(key + ": " + (bold ? ConsoleColors.bold(value) : value));
     }
 
-    return info.toString();
+    return dataStrs;
+  }
+
+  public String toString() {
+    return getDataStrings().toString();
   }
 
   public void showInfo() {
-    for (WeatherField field : fields) {
-      String name = field.getName();
-      if (data.containsKey(name)) {
-        System.out.println(name + ": " + ConsoleColors.bold(data.get(name)));
-      }
+    ArrayList<String> info = getDataStrings(true);
+
+    for (String s : info) {
+      System.out.println(s);
     }
   }
 
   private void getImage() {
-    String baseURL;
+    if (ds != null) {
+      String baseURL;
 
-    if (ds.hasFields("icon_url_base", "icon_url_name")) {
-      baseURL = (ds.fetchString("icon_url_base") + ds.fetchString("icon_url_name")).replaceAll("http", "https");
-      try {
-        URL url = new URL(baseURL);
-        RenderedImage image = ImageIO.read(url);
+      if (ds.hasFields("icon_url_base", "icon_url_name")) {
+        baseURL = (ds.fetchString("icon_url_base") + ds.fetchString("icon_url_name")).replaceAll("http", "https");
+        try {
+          URL url = new URL(baseURL);
+          RenderedImage image = ImageIO.read(url);
 
-        File images = new File(IMAGES_DIR);
-        if (!images.exists()) {
-          images.mkdir();
+          File images = new File(IMAGES_DIR);
+          if (!images.exists()) {
+            images.mkdir();
+          }
+
+          String filePath = IMAGES_DIR + "/" + id + ".png";
+
+          ImageIO.write(image, "png", new File(filePath));
+          System.out.println("Saved image to: " + filePath);
+        } catch (Exception e) {
+          e.printStackTrace();
         }
-
-        String filePath = IMAGES_DIR + "/" + id + ".png";
-
-        ImageIO.write(image, "png", new File(filePath));
-        System.out.println("Saved image to: " + filePath);
-      } catch (Exception e) {
-        e.printStackTrace();
       }
     }
   }

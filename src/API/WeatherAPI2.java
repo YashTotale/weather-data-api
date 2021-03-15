@@ -13,7 +13,12 @@ public class WeatherAPI2 {
 
     System.out.println();
 
-    System.out.println(ConsoleColors.underline("Coldest") + ": " + wapi.coldestObservation());
+    Observation[] coldAndWarm = wapi.coldestAndWarmestObservation();
+    Observation coldest = coldAndWarm[0];
+    Observation warmest = coldAndWarm[1];
+
+    System.out.println(ConsoleColors.underline("Coldest") + ": " + coldest);
+    System.out.println(ConsoleColors.underline("Warmest") + ": " + warmest);
 
     System.out.println();
 
@@ -37,14 +42,16 @@ public class WeatherAPI2 {
     }
   }
 
-  public Observation coldestObservation() {
+  public Observation[] coldestAndWarmestObservation() {
     Observation coldest = null;
+    Observation warmest = null;
 
     for (Observation ob : obs) {
       if (coldest == null || ob.colderThan(coldest)) coldest = ob;
+      if(warmest == null || ob.warmerThan(warmest)) warmest = ob;
     }
 
-    return coldest;
+    return new Observation[]{coldest, warmest};
   }
 
   public Observation[] highestAndLowestPressures() {
@@ -90,6 +97,10 @@ class Observation {
 
   public boolean colderThan(Observation that) {
     return this.temp < that.temp;
+  }
+
+  public boolean warmerThan(Observation that) {
+    return this.temp > that.temp;
   }
 
   public boolean lowerPressureThan(Observation that) {

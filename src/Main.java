@@ -1,5 +1,6 @@
 import API.WeatherAPI1;
 import API.WeatherAPI2;
+import API.WeatherAPI3;
 
 class Main {
   private static void section(int num) {
@@ -14,7 +15,7 @@ class Main {
     section(2);
     WeatherAPI2.main(args);
 
-    //section(3);
-    //API.WeatherAPI3.main(args);
+    section(3);
+    WeatherAPI3.main(args);
   }
 }
