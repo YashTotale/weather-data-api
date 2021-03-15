@@ -8,6 +8,7 @@
   - [Part B](#part-b)
   - [Part C](#part-c)
 - [Day 2](#day-2)
+- [Day 3](#day-3)
 
 ## Running Locally
 
@@ -41,3 +42,7 @@ I chose Atlanta, Miami, and Dallas as my 3 other locations as they are all in th
 ## Day 2
 
 ![Day 2](https://raw.githubusercontent.com/YashTotale/weather-data-api/main/static/api2.gif)
+
+## Day 3
+
+![Day 3](https://raw.githubusercontent.com/YashTotale/weather-data-api/main/static/api3.gif)
