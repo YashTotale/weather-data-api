@@ -6,12 +6,6 @@
     ".prettierignore": "ignore",
     ".prettierc": "json",
 
-    ".eslintignore": "ignore",
-    ".eslintrc": "json",
-
-    ".lintstagedrc": "json",
-
-    ".snyk": "yaml",
     ".imgbotconfig": "json"
   }
 }
